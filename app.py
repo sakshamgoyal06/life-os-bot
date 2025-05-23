@@ -19,10 +19,12 @@ def whatsapp_bot():
         if not plan:
             msg.body("No tasks found for today. Want me to add something?")
         else:
-            text = "*Here's your plan for today:*"
-"
+            text = "*Here's your plan for today:*\n"
             for task in plan:
-                text += f"- [{task['status']}] {task['task_description']} (Do by: {task['do_by_time']})\n"
+                status = task.get("status", "Pending")
+                desc = task.get("task_description", "No description")
+                time = task.get("do_by_time", "No time")
+                text += f"- [{status}] {desc} (Do by: {time})\n"
             msg.body(text)
 
     elif incoming_msg.startswith("done"):
@@ -35,7 +37,11 @@ def whatsapp_bot():
             msg.body("Please send: done TASK_ID (e.g., 'done T001')")
 
     else:
-        msg.body("Hey! You can ask for:\n- 'Today's plan'\n- 'Done T001' to mark a task")
+        msg.body(
+            "Hey! You can ask for:\n"
+            "- 'Today's plan' to see your schedule\n"
+            "- 'Done T001' to mark a task complete"
+        )
 
     return str(resp)
 
@@ -43,4 +49,3 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
