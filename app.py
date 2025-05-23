@@ -38,3 +38,9 @@ def whatsapp_bot():
         msg.body("Hey! You can ask for:\n- 'Today's plan'\n- 'Done T001' to mark a task")
 
     return str(resp)
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
