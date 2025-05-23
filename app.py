@@ -19,7 +19,7 @@ def whatsapp_bot():
         if not plan:
             msg.body("No tasks found for today. Want me to add something?")
         else:
-            text = "*Here's your plan for today:*
+            text = "*Here's your plan for today:*"
 "
             for task in plan:
                 text += f"- [{task['status']}] {task['task_description']} (Do by: {task['do_by_time']})\n"
