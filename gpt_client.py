@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "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"
 
 def parse_user_message(user_input):
     system_prompt = """
