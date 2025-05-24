@@ -24,7 +24,9 @@ def whatsapp_bot():
                 status = task.get("status", "Pending")
                 desc = task.get("task_description", "No description")
                 time = task.get("do_by_time", "No time")
-                text += f"- [{status}] {desc} (Do by: {time})\n"
+                task_id = task.get("task_id", "")
+                text += f"- [{status}] {desc} (Do by: {time}) — ID: {task_id}\n"
+
             msg.body(text)
 
     elif incoming_msg.startswith("done"):
