@@ -29,23 +29,33 @@ def whatsapp_bot():
 
             msg.body(text)
 
-    elif incoming_msg.startswith("done"):
-        parts = incoming_msg.split()
+        elif incoming_msg.lower().startswith("done"):
+        parts = incoming_msg.split(maxsplit=1)
         if len(parts) == 2:
-            task_id = parts[1].strip().lower()
-            result = mark_task_done(task_id)
-            msg.body(result)
+            task_ids_raw = parts[1].strip()
+            task_ids = [tid.strip().lower() for tid in task_ids_raw.split(",") if tid.strip()]
+            
+            if not task_ids:
+                msg.body("Please provide at least one valid task ID (e.g., 'done T001, T002').")
+            else:
+                responses = []
+                for task_id in task_ids:
+                    result = mark_task_done(task_id)
+                    responses.append(f"{task_id.upper()}: {result}")
+                msg.body("\n".join(responses))
         else:
-            msg.body("Please send: done TASK_ID (e.g., 'done T001')")
+            msg.body("Please send: done TASK_ID (e.g., 'done T001') or multiple IDs like 'done T001, T002'")
 
     else:
         msg.body(
             "Hey! You can ask for:\n"
             "- 'Today's plan' to see your schedule\n"
-            "- 'Done T001' to mark a task complete"
+            "- 'Done T001' to mark a task complete\n"
+            "- 'Done T001, T002' to mark multiple tasks"
         )
 
     return str(resp)
+
 
 if __name__ == "__main__":
     import os
