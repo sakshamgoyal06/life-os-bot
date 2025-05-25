@@ -26,10 +26,9 @@ def whatsapp_bot():
                 time = task.get("do_by_time", "No time")
                 task_id = task.get("task_id", "")
                 text += f"- [{status}] {desc} (Do by: {time}) — ID: {task_id}\n"
-
             msg.body(text)
 
-        elif incoming_msg.lower().startswith("done"):
+    elif incoming_msg.startswith("done"):
         parts = incoming_msg.split(maxsplit=1)
         if len(parts) == 2:
             task_ids_raw = parts[1].strip()
@@ -55,6 +54,7 @@ def whatsapp_bot():
         )
 
     return str(resp)
+
 
 
 if __name__ == "__main__":
