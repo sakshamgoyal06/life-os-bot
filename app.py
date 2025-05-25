@@ -32,7 +32,7 @@ def whatsapp_bot():
     elif incoming_msg.startswith("done"):
         parts = incoming_msg.split()
         if len(parts) == 2:
-            task_id = parts[1].strip().upper()
+            task_id = parts[1].strip().lower()
             result = mark_task_done(task_id)
             msg.body(result)
         else:
