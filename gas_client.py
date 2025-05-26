@@ -1,7 +1,6 @@
 import requests
 import pandas
 GAS_URL = "https://script.google.com/macros/s/AKfycbxyaw7C3fzCFkod69je6hLUE2EncogxoKQbwm7BQguZN20t7QB0UvOb2M_Zp4oFpuk/exec"
-
 def fetch_today_plan():
     try:
         response = requests.get(GAS_URL, params={"action": "getTodayPlan"})
