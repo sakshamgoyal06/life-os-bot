@@ -1,6 +1,6 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from gas_client import fetch_today_plan, mark_task_done
+from gas_client import fetch_today_plan, mark_task_done, add_task_via_gemini
 
 app = Flask(__name__)
 
@@ -45,13 +45,18 @@ def whatsapp_bot():
         else:
             msg.body("Please send: done TASK_ID (e.g., 'done T001') or multiple IDs like 'done T001, T002'")
 
+    elif incoming_msg.startswith("add"):
+        result = add_task_via_gemini(incoming_msg)
+        msg.body(f"*Task Add Result:*\n{result}")
+
     else:
         msg.body(
             "Hey! You can ask for:\n"
             "- 'Today's plan' to see your schedule\n"
             "- 'Done T001' to mark a task complete\n"
-            "- 'Done T001, T002' to mark multiple tasks"
+            "- 'Add walk at 7 AM tomorrow' to create a task"
         )
+
 
     return str(resp)
 
